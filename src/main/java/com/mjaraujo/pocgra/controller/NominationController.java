@@ -15,15 +15,6 @@ public class NominationController {
 
     private NominationService nominationService;
 
-    /*@PostMapping("/nominations")
-    public ResponseEntity<Nomination> save(@RequestBody Nomination nomination) {
-        try {
-            return new ResponseEntity<>(nominationService.save(nomination), HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-*/
     @GetMapping("/nominations")
     public ResponseEntity<List<Nomination>> getAllNominations() {
         try {
@@ -46,15 +37,6 @@ public class NominationController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-/*
-    @PutMapping("/nominations/{id}")
-    public ResponseEntity<Nomination> updateNomination(@RequestBody Nomination nomination) {
-        try {
-            return new ResponseEntity<>(nominationService.save(nomination), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }*/
 
     @DeleteMapping("/nominations/{id}")
     public ResponseEntity<Nomination> deleteNomination(@PathVariable Long id) {

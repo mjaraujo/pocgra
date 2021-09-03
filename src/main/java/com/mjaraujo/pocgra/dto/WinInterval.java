@@ -8,6 +8,6 @@ import java.util.List;
 
 @Data
 public class WinInterval implements Serializable {
-    private List<WinningItem> min = new ArrayList<>();
-    private List<WinningItem> max = new ArrayList<>();
+    private WinningItem min;
+    private WinningItem max;
 }

@@ -28,21 +28,18 @@ public class WinnersService {
                 .filter(Nomination::getWinner)
                 .collect(Collectors.toList());
 
-        //Extrai nome e ano
-        List<List<Winner>> winnersList = winnersNomination
-                .stream()
-                .map(nomination -> nomination.getProducerPartners()
-                        .stream()
-                        .map(producer -> {
-                            Winner winner = new Winner();
-                            winner.setYear(nomination.getYear());
-                            winner.setName(producer.getName());
-                            return winner;
-                        }).collect(Collectors.toList())).collect(Collectors.toList());
-
+        //Extrai produtor e ano
         List<Winner> finalWinners = new ArrayList<>();
-        for (List<Winner> winner : winnersList) {
-            finalWinners.addAll(winner);
+        for (Nomination nomination : winnersNomination) {
+            finalWinners.addAll(nomination.getProducerPartners()
+                    .stream()
+                    .map(producer -> {
+                        Winner winner = new Winner();
+                        winner.setYear(nomination.getYear());
+                        winner.setName(producer.getName());
+                        return winner;
+                    }).collect(Collectors.toList())
+            );
         }
 
         //Agrupa por produtor
@@ -89,8 +86,8 @@ public class WinnersService {
             minList.add(winningItemMin);
         }
 
-        winInterval.getMin().addAll(maxList.stream().sorted(Comparator.comparing(WinningItem::getInterval)).collect(Collectors.toList()));
-        winInterval.getMax().addAll(minList.stream().sorted(Comparator.comparing(WinningItem::getInterval).reversed()).collect(Collectors.toList()));
+        winInterval.setMax(maxList.stream().max(Comparator.comparing(WinningItem::getInterval)).orElseGet(WinningItem::new));
+        winInterval.setMin(minList.stream().min(Comparator.comparing(WinningItem::getInterval)).orElseGet(WinningItem::new));
 
         return winInterval;
     }
